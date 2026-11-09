@@ -1,0 +1,107 @@
+{
+ "version": 1,
+ "clips": {
+  "en": {
+   "female": [
+    "high",
+    "mid",
+    "safe",
+    "why",
+    "test",
+    "r_urgency",
+    "r_prize",
+    "r_money",
+    "r_link",
+    "r_sensitive",
+    "r_threat",
+    "r_impersonation",
+    "r_new_payee",
+    "r_too_good"
+   ],
+   "male": [
+    "high",
+    "mid",
+    "safe",
+    "why",
+    "test",
+    "r_urgency",
+    "r_prize",
+    "r_money",
+    "r_link",
+    "r_sensitive",
+    "r_threat",
+    "r_impersonation",
+    "r_new_payee",
+    "r_too_good"
+   ]
+  },
+  "te": {
+   "female": [
+    "high",
+    "mid",
+    "safe",
+    "why",
+    "test",
+    "r_urgency",
+    "r_prize",
+    "r_money",
+    "r_link",
+    "r_sensitive",
+    "r_threat",
+    "r_impersonation",
+    "r_new_payee",
+    "r_too_good"
+   ],
+   "male": [
+    "high",
+    "mid",
+    "safe",
+    "why",
+    "test",
+    "r_urgency",
+    "r_prize",
+    "r_money",
+    "r_link",
+    "r_sensitive",
+    "r_threat",
+    "r_impersonation",
+    "r_new_payee",
+    "r_too_good"
+   ]
+  },
+  "hi": {
+   "female": [
+    "high",
+    "mid",
+    "safe",
+    "why",
+    "test",
+    "r_urgency",
+    "r_prize",
+    "r_money",
+    "r_link",
+    "r_sensitive",
+    "r_threat",
+    "r_impersonation",
+    "r_new_payee",
+    "r_too_good"
+   ],
+   "male": [
+    "high",
+    "mid",
+    "safe",
+    "why",
+    "test",
+    "r_urgency",
+    "r_prize",
+    "r_money",
+    "r_link",
+    "r_sensitive",
+    "r_threat",
+    "r_impersonation",
+    "r_new_payee",
+    "r_too_good"
+   ]
+  }
+ }
+}

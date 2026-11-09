@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-size="m" data-motion="on">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Check a suspicious message for common scam warning signs. Free, private, and available in English, Telugu and Hindi voice.">
+<title>AI Scam Awareness Tool</title>
+<style nonce="{{ nonce }}">
+  @font-face { font-family:"Source Sans 3"; font-style:normal; font-weight:200 900; font-display:swap;
+    src:url(/static/fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family:"Source Sans 3"; font-style:normal; font-weight:200 900; font-display:swap;
+    src:url(/static/fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family:"Source Serif 4"; font-style:normal; font-weight:200 900; font-display:swap;
+    src:url(/static/fonts/source-serif-4-latin-wght-normal.woff2) format("woff2");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family:"Source Serif 4"; font-style:normal; font-weight:200 900; font-display:swap;
+    src:url(/static/fonts/source-serif-4-latin-ext-wght-normal.woff2) format("woff2");
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family:"Noto Sans Telugu"; font-style:normal; font-weight:100 900; font-display:swap;
+    src:url(/static/fonts/noto-sans-telugu-telugu-wght-normal.woff2) format("woff2");
+    unicode-range:U+0951-0952,U+0964-0965,U+0C00-0C7F,U+1CDA,U+1CF2,U+200C-200D,U+25CC; }
+
+  :root {
+    --bg:#ffffff; --surface:#ffffff; --subtle:#f5f6f8; --line:#d8dce3; --line-strong:#aab1bd;
+    --text:#16191f; --muted:#555d6b; --accent:#17375e; --accent-hover:#0f2744; --accent-text:#ffffff; --link:#17375e;
+    --ok:#1b6b3a; --warn:#8a5a00; --bad:#b3261e; --ok-bg:#eaf5ee; --warn-bg:#fff6e0; --bad-bg:#fdecea; --info-bg:#eef3fa;
+    --focus:#1a5fd1;
+    --serif:"Source Serif 4",Georgia,"Times New Roman","Noto Sans Telugu",serif;
+    --sans:"Source Sans 3","Noto Sans Telugu","Nirmala UI","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  }
+  html[data-theme="dark"] {
+    --bg:#101317; --surface:#171b21; --subtle:#1d222a; --line:#2c333d; --line-strong:#47505e;
+    --text:#eceff4; --muted:#a3acba; --accent:#7fb0f0; --accent-hover:#a3c6f5; --accent-text:#0b1220; --link:#9bc2f6;
+    --ok:#5fd18a; --warn:#f0b64a; --bad:#ff8a80; --ok-bg:#12261a; --warn-bg:#2a2210; --bad-bg:#2e1715; --info-bg:#16202e;
+    --focus:#8fbdff;
+  }
+  html[data-theme="contrast"] {
+    --bg:#000; --surface:#000; --subtle:#000; --line:#ffff00; --line-strong:#ffff00;
+    --text:#fff; --muted:#ffff99; --accent:#ffff00; --accent-hover:#fff; --accent-text:#000; --link:#00ffff;
+    --ok:#00ff66; --warn:#ffcc00; --bad:#ff7777; --ok-bg:#000; --warn-bg:#000; --bad-bg:#000; --info-bg:#000; --focus:#00ffff;
+  }
+  html { font-size:17px; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  html[data-size="s"] { font-size:15.5px; }
+  html[data-size="l"] { font-size:19.5px; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; min-height:100dvh; background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased; padding-left:env(safe-area-inset-left,0px); padding-right:env(safe-area-inset-right,0px); }
+  .hidden { display:none !important; }
+  a { color:var(--link); }
+  .sprite { position:absolute; width:0; height:0; overflow:hidden; }
+  h1, h2, h3 { font-family:var(--serif); }
+
+  /* ===== emergency strip + header ===== */
+  .alert-bar { display:block; text-align:center; padding:9px 14px; padding-top:calc(9px + env(safe-area-inset-top,0px)); font-weight:600; font-size:.92rem; text-decoration:none;
+    color:#fff; background:var(--bad); }
+  html[data-theme="dark"] .alert-bar { background:#8c1d18; }
+  html[data-theme="contrast"] .alert-bar { color:#000; background:#ffff00; }
+  .site-head { background:var(--surface); border-bottom:1px solid var(--line); }
+  .site-head .in { max-width:860px; margin:0 auto; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); font-weight:650; font-size:1.12rem; line-height:1.2; min-width:0; }
+  .brand svg { flex:none; width:28px; height:28px; color:var(--accent); }
+  .brand span { overflow:hidden; text-overflow:ellipsis; }
+
+  /* ===== buttons ===== */
+  .btn { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 22px; border:1px solid var(--accent); border-radius:6px; cursor:pointer;
+    font:inherit; font-weight:600; color:var(--accent-text); background:var(--accent); text-decoration:none; text-align:center; touch-action:manipulation; }
+  .btn:hover { background:var(--accent-hover); border-color:var(--accent-hover); }
+  .btn:disabled { opacity:.65; cursor:progress; }
+  .btn.ghost { background:transparent; color:var(--text); border-color:var(--line-strong); }
+  .btn.ghost:hover { background:var(--subtle); }
+  .btn.small { min-height:40px; padding:8px 14px; font-size:.92rem; }
+  .btn.call { background:var(--bad); border-color:var(--bad); color:#fff; display:flex; margin-top:10px; }
+  .btn.call:hover { filter:brightness(.92); }
+  html[data-theme="dark"] .btn.call { background:#c2362d; border-color:#c2362d; }
+  html[data-theme="contrast"] .btn.call { background:#ffff00; border-color:#ffff00; color:#000; }
+  .btn.block { display:flex; width:100%; margin-top:8px; }
+  .icon-btn { width:44px; height:44px; border-radius:6px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text); cursor:pointer; font-size:1.1rem; touch-action:manipulation; }
+  textarea:focus-visible, input:focus-visible, button:focus-visible, select:focus-visible, a:focus-visible, .drop:focus-visible { outline:3px solid var(--focus); outline-offset:2px; }
+
+  /* ===== layout ===== */
+  .wrap { width:100%; max-width:860px; margin:0 auto; padding:34px 18px 48px; }
+  .hero { margin-bottom:28px; }
+  .eyebrow { font-size:.82rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:0 0 10px; }
+  h1 { margin:0 0 12px; font-size:2.5rem; font-weight:650; letter-spacing:-.01em; line-height:1.15; }
+  .tagline { color:var(--muted); margin:0; max-width:640px; font-size:1.12rem; }
+  .steps3 { list-style:none; margin:30px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .steps3 li { border-top:2px solid var(--text); padding-top:10px; }
+  .steps3 b { display:block; font-family:var(--serif); font-size:1.02rem; margin-bottom:3px; }
+  .steps3 span { color:var(--muted); font-size:.93rem; }
+
+  /* ===== cards ===== */
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:22px; margin-top:20px; }
+  .label { display:block; font-size:.9rem; font-weight:600; margin:12px 0 6px; }
+  textarea { width:100%; min-height:170px; padding:12px 14px; border-radius:6px; border:1px solid var(--line-strong); background:var(--surface);
+    color:var(--text); font:inherit; font-size:1rem; resize:vertical; }
+  select { width:100%; min-height:44px; padding:9px 10px; border-radius:6px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text); font:inherit; font-size:1rem; }
+  select option { color:#16191f; background:#fff; }
+  .row-between { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; margin-top:6px; }
+  .counter { color:var(--muted); font-size:.85rem; }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:16px; }
+  .chip { min-height:38px; padding:6px 14px; border-radius:6px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text); cursor:pointer; font:inherit; font-size:.9rem; touch-action:manipulation; }
+  .chip:hover { background:var(--subtle); }
+  .drop { margin-top:16px; border:1px dashed var(--line-strong); border-radius:6px; padding:16px; text-align:center; cursor:pointer; background:var(--subtle); }
+  .drop:hover, .drop.over { border-color:var(--accent); }
+  .drop b { display:block; }
+  .thumbs { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .thumb { position:relative; width:112px; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--surface); }
+  .thumb img { display:block; width:100%; height:84px; object-fit:cover; }
+  .thumb .st { font-size:.72rem; padding:4px 6px; color:var(--muted); min-height:26px; }
+  .thumb .pbar { height:4px; background:var(--line); }
+  .thumb .pbar > div { height:100%; width:0; background:var(--accent); transition:width .2s; }
+  .thumb .x { position:absolute; top:2px; right:2px; width:30px; height:30px; border-radius:50%; border:0; cursor:pointer; background:rgba(0,0,0,.7); color:#fff; font-size:.8rem; line-height:1; }
+  .ocr-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px; }
+  .ocr-row select { width:auto; min-width:190px; max-width:100%; }
+  .privacy-line { color:var(--ok); font-size:.88rem; margin:12px 0 0; }
+  .actions { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+
+  /* ===== scanner ===== */
+  .scanner { text-align:center; padding:28px 16px; }
+  .spinner { width:34px; height:34px; margin:0 auto 12px; border:3px solid var(--line); border-top-color:var(--accent); border-radius:50%; animation:spin .9s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* ===== results ===== */
+  .ind-bar { position:sticky; top:env(safe-area-inset-top,0px); z-index:12; display:flex; align-items:center; gap:12px; margin-top:20px; padding:10px 12px;
+    border-radius:8px; background:var(--surface); border:1px solid var(--line); border-left:6px solid var(--muted); }
+  .ind-bar[data-level="high"] { border-left-color:var(--bad); }
+  .ind-bar[data-level="mid"] { border-left-color:var(--warn); }
+  .ind-bar[data-level="safe"] { border-left-color:var(--ok); }
+  .verdict-ico { width:44px; height:44px; flex:none; display:flex; align-items:center; justify-content:center; border-radius:50%; font-weight:800; font-size:1.3rem; font-family:var(--serif);
+    border:2px solid var(--muted); color:var(--muted); }
+  .ind-bar[data-level="high"] .verdict-ico { border-color:var(--bad); color:var(--bad); background:var(--bad-bg); }
+  .ind-bar[data-level="mid"] .verdict-ico { border-color:var(--warn); color:var(--warn); background:var(--warn-bg); }
+  .ind-bar[data-level="safe"] .verdict-ico { border-color:var(--ok); color:var(--ok); background:var(--ok-bg); }
+  .ind-text { flex:1; min-width:0; }
+  .level { font-family:var(--serif); font-size:1.15rem; font-weight:650; line-height:1.3; }
+  .ind-score { font-weight:700; font-size:1.1rem; white-space:nowrap; }
+  .ind-bar .btn { flex:none; min-height:40px; padding:8px 14px; font-size:.92rem; }
+  .why { color:var(--muted); font-size:.9rem; }
+  .danger-banner { padding:12px 14px; border-radius:6px; font-weight:600; border:1px solid var(--bad); background:var(--bad-bg); color:var(--text); margin-bottom:12px; }
+  .gauge-wrap { max-width:340px; margin:6px auto 0; }
+  .gauge-wrap svg { width:100%; height:auto; display:block; overflow:visible; }
+  .needle { transform-origin:100px 100px; transform:rotate(-90deg); transition:transform 1s ease-out; }
+  html[data-motion="off"] .needle { transition:none; }
+  .gauge-num { font-family:var(--serif); font-size:2.3rem; font-weight:700; text-align:center; line-height:1; margin-top:-6px; }
+  .gauge-sub { text-align:center; color:var(--muted); font-size:.88rem; font-family:var(--sans); font-weight:400; }
+  .signs { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; margin-top:12px; }
+  .sign { border:1px solid var(--line); border-left:4px solid var(--warn); border-radius:6px; padding:10px 14px; background:var(--surface); }
+  .sign b { display:block; font-weight:650; }
+  .steps-list { padding:0 0 0 1.3rem; margin:12px 0 0; }
+  .steps-list li { padding:4px 0 4px 4px; margin-bottom:6px; }
+  .steps-list li::marker { font-weight:700; color:var(--accent); }
+  .emergency { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:14px; padding:12px 14px; border-radius:6px; background:var(--bad-bg); border:1px solid var(--bad); }
+  .emergency .btn.call { margin-top:0; }
+  .note-card { border-left:4px solid var(--warn); }
+  .error-card { border-left:4px solid var(--bad); background:var(--bad-bg); }
+  .info-card { border-left:4px solid var(--accent); background:var(--info-bg); }
+  .disc { color:var(--muted); font-size:.85rem; margin-top:14px; }
+  .footer { border-top:1px solid var(--line); background:var(--subtle); text-align:center; padding:22px 16px calc(26px + env(safe-area-inset-bottom,0px)); color:var(--muted); font-size:.9rem; }
+  .footer strong { color:var(--text); }
+
+  /* ===== settings drawer ===== */
+  .sidebar { position:fixed; right:0; top:0; bottom:0; width:min(380px,92vw); overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; z-index:40;
+    background:var(--bg); border-left:1px solid var(--line-strong); padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(28px + env(safe-area-inset-bottom,0px));
+    transform:translateX(105%); visibility:hidden; transition:transform .22s ease, visibility 0s linear .22s; }
+  .sidebar.open { transform:translateX(0); visibility:visible; transition:transform .22s ease; }
+  html[data-motion="off"] .sidebar, html[data-motion="off"] .sidebar.open { transition:none; }
+  .scrim { position:fixed; inset:0; background:rgba(10,14,20,.5); z-index:30; }
+  .side-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .side-head h2 { margin:0; font-size:1.3rem; font-weight:650; }
+  .panel { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px; margin-bottom:14px; }
+  .panel h3 { margin:0 0 8px; font-size:1.05rem; font-weight:650; }
+  .panel ol, .panel ul { margin:6px 0 0; padding-left:20px; font-size:.93rem; }
+  .panel li { margin-bottom:6px; }
+  .helpline { border:2px solid var(--bad); }
+  html[data-theme="contrast"] .helpline { border-color:#ffff00; }
+  .hl-sub { color:var(--muted); font-size:.88rem; margin:0 0 4px; }
+  .hl-number { font-family:var(--serif); font-size:3rem; font-weight:700; letter-spacing:3px; line-height:1.1; color:var(--bad); }
+  .gap-top { margin-top:16px !important; }
+  .seg { display:flex; gap:6px; }
+  .seg button { flex:1; min-height:44px; padding:8px 6px; border-radius:6px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text); cursor:pointer; font:inherit; font-size:.9rem; touch-action:manipulation; }
+  .seg button[aria-pressed="true"] { background:var(--accent); color:var(--accent-text); border-color:var(--accent); font-weight:600; }
+  .small-note { color:var(--muted); font-size:.88rem; margin:0; }
+  .badge { display:inline-block; margin-top:10px; padding:4px 12px; border-radius:999px; font-size:.82rem; font-weight:600; background:var(--ok-bg); color:var(--ok); border:1px solid var(--ok); }
+  .voice-status { margin-top:10px; }
+
+  /* ===== language chooser ===== */
+  .overlay { position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:60; padding:16px; overflow-y:auto; }
+  .modal { max-width:420px; width:100%; text-align:center; }
+  .modal .brand { justify-content:center; margin-bottom:20px; }
+  .modal h2 { margin:4px 0; font-size:1.5rem; font-weight:650; }
+  .modal p { color:var(--muted); margin:12px 0 18px; }
+  .modal .btn { display:flex; width:100%; margin-top:12px; font-size:1.15rem; min-height:52px; }
+
+  @media (max-width: 700px) {
+    html { font-size:16.5px; }
+    .wrap { padding:24px 16px 40px; }
+    h1 { font-size:1.9rem; }
+    .tagline { font-size:1.03rem; }
+    .steps3 { grid-template-columns:1fr; gap:10px; margin-top:20px; }
+    .steps3 span { display:none; }
+    .steps3 li { padding-top:8px; }
+    .card { padding:16px; margin-top:16px; }
+    textarea { font-size:16px; }
+    select { font-size:16px; }
+    .ind-bar { gap:8px; padding:8px 10px; }
+    .verdict-ico { width:38px; height:38px; font-size:1.1rem; }
+    .level { font-size:1.02rem; }
+    .ind-score { font-size:1rem; }
+    .ind-bar .btn { padding:8px 10px; font-size:.85rem; }
+    .actions .btn { flex:1; }
+    .brand { font-size:1rem; }
+    .signs { grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation-duration:2.5s; } .needle, .sidebar, .sidebar.open { transition:none; } }
+</style>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+  <symbol id="logo" viewBox="0 0 32 32"><path d="M16 2 4 6.5V15c0 7.6 5 12.9 12 15 7-2.1 12-7.4 12-15V6.5L16 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10.5 16l4 4 7-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div id="chooser" class="overlay" role="dialog" aria-modal="true" aria-labelledby="chooserTitle">
+  <div class="modal">
+    <div class="brand"><svg aria-hidden="true"><use href="#logo"/></svg><span>AI Scam Awareness Tool</span></div>
+    <h2 id="chooserTitle">Choose your language</h2>
+    <h2>మీ భాషను ఎంచుకోండి</h2>
+    <p>You can change this anytime in Settings.<br>మీరు దీన్ని సెట్టింగ్‌లలో ఎప్పుడైనా మార్చుకోవచ్చు.</p>
+    <button class="btn" id="pickEn" type="button">English</button>
+    <button class="btn" id="pickTe" type="button">తెలుగు</button>
+  </div>
+</div>
+
+<div id="scrim" class="scrim hidden"></div>
+
+<aside id="sidebar" class="sidebar" aria-label="Settings">
+  <div class="side-head">
+    <h2 data-i18n="setTitle">Settings</h2>
+    <button id="closeSide" class="icon-btn" type="button" data-i18n-aria="closeSettings" aria-label="Close settings">✕</button>
+  </div>
+
+  <section class="panel helpline">
+    <h3 data-i18n="hlTitle"></h3>
+    <p class="hl-sub" data-i18n="hlSub"></p>
+    <div class="hl-number">1930</div>
+    <a class="btn call" href="tel:1930" data-i18n="callBtn"></a>
+    <a class="btn ghost block" href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" data-i18n="portalBtn"></a>
+    <h3 class="gap-top" data-i18n="stepsTitle"></h3>
+    <ol id="steps"></ol>
+  </section>
+
+  <section class="panel">
+    <h3 data-i18n="dispTitle"></h3>
+    <label class="label" for="langSel" data-i18n="langLabel"></label>
+    <select id="langSel"><option value="en">English</option><option value="te">తెలుగు</option></select>
+    <span class="label" data-i18n="themeLabel"></span>
+    <div class="seg" id="themeSeg">
+      <button type="button" data-theme="dark" aria-pressed="false" data-i18n="themeDark"></button>
+      <button type="button" data-theme="light" aria-pressed="true" data-i18n="themeLight"></button>
+      <button type="button" data-theme="contrast" aria-pressed="false" data-i18n="themeContrast"></button>
+    </div>
+    <span class="label" data-i18n="sizeLabel"></span>
+    <div class="seg" id="sizeSeg">
+      <button type="button" data-size="s" aria-pressed="false" data-i18n="sizeS"></button>
+      <button type="button" data-size="m" aria-pressed="true" data-i18n="sizeM"></button>
+      <button type="button" data-size="l" aria-pressed="false" data-i18n="sizeL"></button>
+    </div>
+    <span class="label" data-i18n="motionLabel"></span>
+    <div class="seg" id="motionSeg">
+      <button type="button" data-motion="on" aria-pressed="true" data-i18n="motionOn"></button>
+      <button type="button" data-motion="off" aria-pressed="false" data-i18n="motionOff"></button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3 data-i18n="voiceTitle"></h3>
+    <span class="label" data-i18n="voiceOnLabel"></span>
+    <div class="seg" id="vOnSeg">
+      <button type="button" data-v="on" aria-pressed="true" data-i18n="motionOn"></button>
+      <button type="button" data-v="off" aria-pressed="false" data-i18n="motionOff"></button>
+    </div>
+    <label class="label" for="vLang" data-i18n="voiceLangLabel"></label>
+    <select id="vLang"><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option></select>
+    <span class="label" data-i18n="voiceGenderLabel"></span>
+    <div class="seg" id="vGenderSeg">
+      <button type="button" data-v="female" aria-pressed="true" data-i18n="gFemale"></button>
+      <button type="button" data-v="male" aria-pressed="false" data-i18n="gMale"></button>
+    </div>
+    <span class="label" data-i18n="voiceSpeedLabel"></span>
+    <div class="seg" id="vSpeedSeg">
+      <button type="button" data-v="slow" aria-pressed="false" data-i18n="spSlow"></button>
+      <button type="button" data-v="normal" aria-pressed="true" data-i18n="spNormal"></button>
+      <button type="button" data-v="fast" aria-pressed="false" data-i18n="spFast"></button>
+    </div>
+    <label class="label" for="vVoice" data-i18n="voiceVoiceLabel"></label>
+    <select id="vVoice"></select>
+    <button type="button" class="btn ghost block" id="vTest" data-i18n="voiceTest"></button>
+    <p class="small-note voice-status" id="vStatus"></p>
+  </section>
+
+  <section class="panel">
+    <h3 data-i18n="tipsTitle"></h3>
+    <ul id="tips"></ul>
+  </section>
+
+  <section class="panel">
+    <h3 data-i18n="privTitle"></h3>
+    <p class="small-note" data-i18n="privText"></p>
+    <span class="badge" data-i18n="badge"></span>
+  </section>
+</aside>
+
+<div class="main">
+  <a class="alert-bar" href="tel:1930" data-i18n="banner"></a>
+  <header class="site-head"><div class="in">
+    <div class="brand"><svg aria-hidden="true"><use href="#logo"/></svg><span data-i18n="title"></span></div>
+    <button id="openSide" class="btn ghost small" type="button" data-i18n="openSettings"></button>
+  </div></header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="eyebrow" data-i18n="eyebrow"></p>
+      <h1 data-i18n="heroTitle"></h1>
+      <p class="tagline" data-i18n="tagline"></p>
+      <ol class="steps3" aria-label="How it works">
+        <li><b data-i18n="how1t"></b><span data-i18n="how1d"></span></li>
+        <li><b data-i18n="how2t"></b><span data-i18n="how2d"></span></li>
+        <li><b data-i18n="how3t"></b><span data-i18n="how3d"></span></li>
+      </ol>
+    </div>
+
+    <section class="card">
+      <label class="label" for="msg" data-i18n="inputLabel"></label>
+      <textarea id="msg" maxlength="5000" data-i18n-ph="placeholder"></textarea>
+      <div class="row-between">
+        <span class="counter" id="counter">0 / 5000</span>
+        <span class="counter" data-i18n="hint"></span>
+      </div>
+
+      <div class="drop" id="drop" tabindex="0" role="button" data-i18n-aria="imgTitle">
+        <b data-i18n="imgTitle"></b>
+        <span class="counter" data-i18n="imgDrop"></span>
+      </div>
+      <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" multiple class="hidden">
+      <div class="thumbs" id="thumbs"></div>
+      <div class="ocr-row hidden" id="ocrRow">
+        <label class="counter" for="ocrLang" data-i18n="ocrLang"></label>
+        <select id="ocrLang">
+          <option value="eng" data-i18n="ocrEng"></option>
+          <option value="tel" data-i18n="ocrTelOnly"></option>
+          <option value="eng+tel" data-i18n="ocrTel"></option>
+          <option value="eng+hin" data-i18n="ocrHin"></option>
+        </select>
+      </div>
+      <p class="privacy-line" data-i18n="imgPrivacy"></p>
+
+      <div class="chips">
+        <span class="counter" data-i18n="exLabel"></span>
+        <button type="button" class="chip" data-ex="0" data-i18n="ex1"></button>
+        <button type="button" class="chip" data-ex="1" data-i18n="ex2"></button>
+        <button type="button" class="chip" data-ex="2" data-i18n="ex3"></button>
+      </div>
+      <div class="actions">
+        <button id="analyzeBtn" class="btn" type="button" data-i18n="analyze"></button>
+        <button id="clearBtn" class="btn ghost" type="button" data-i18n="clear"></button>
+      </div>
+    </section>
+
+    <div id="infoBox" class="card info-card hidden" role="status"></div>
+    <div id="errorBox" class="card error-card hidden" role="alert"></div>
+
+    <section id="scanner" class="card scanner hidden" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <div id="scanText"></div>
+    </section>
+
+    <div id="out" class="hidden" aria-live="polite">
+      <div class="ind-bar" id="indBar" data-level="low">
+        <div class="verdict-ico" id="vIco" aria-hidden="true"></div>
+        <div class="ind-text"><div class="level" id="level"></div><div class="why" id="detected"></div></div>
+        <div class="ind-score" id="indScore"></div>
+        <button type="button" class="btn" id="listenBtn"></button>
+      </div>
+      <section class="card">
+        <div class="danger-banner hidden" id="dangerBanner" role="alert"></div>
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 200 118" aria-hidden="true">
+            <path d="M20 100 A80 80 0 0 1 63.7 28.7" fill="none" stroke="#2e8b57" stroke-width="15"/>
+            <path d="M63.7 28.7 A80 80 0 0 1 124.7 23.9" fill="none" stroke="#d99a1b" stroke-width="15"/>
+            <path d="M124.7 23.9 A80 80 0 0 1 180 100" fill="none" stroke="#c0392b" stroke-width="15"/>
+            <g class="needle" id="needle"><line x1="100" y1="100" x2="100" y2="34" stroke="var(--text)" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="100" r="8" fill="var(--text)"/></g>
+          </svg>
+          <div class="gauge-num"><span id="scoreNum">0</span><span class="gauge-sub"> / 100</span></div>
+          <div class="gauge-sub" id="gaugeTitle"></div>
+        </div>
+        <div class="why" id="scores"></div>
+        <p id="explain"></p>
+        <div class="emergency hidden" id="emergency"><span id="emText"></span><a class="btn call" href="tel:1930" id="emBtn"></a></div>
+      </section>
+      <section class="card note-card hidden" id="noteCard"><span id="noteText"></span></section>
+      <section class="card">
+        <strong data-i18n="foundTitle"></strong>
+        <div class="signs" id="found"></div>
+      </section>
+      <section class="card">
+        <strong data-i18n="actionTitle"></strong>
+        <ol class="steps-list" id="actions"></ol>
+      </section>
+      <p class="disc" id="disc"></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div><strong data-i18n="footerHelp"></strong></div>
+    <div data-i18n="footerNote"></div>
+  </footer>
+</div>
+
+<noscript>This tool needs JavaScript to run.</noscript>
+
+<script nonce="{{ nonce }}">
+const MAX_CHARS = 5000, MAX_IMAGES = 5, MAX_BYTES = 8 * 1024 * 1024;
+const UI = {
+  en: {
+    title: "AI Scam Awareness Tool", eyebrow: "Scam awareness", heroTitle: "Check a message before you trust it.",
+    tagline: "Paste a suspicious message or add screenshots, and see which scam warning signs it contains.",
+    banner: "Lost money to a scam? Call 1930 now (National Cyber Crime Helpline)",
+    openSettings: "Settings", closeSettings: "Close settings", setTitle: "Settings",
+    hlTitle: "Cyber Crime Helpline", hlSub: "National helpline for online fraud, open 24 hours",
+    callBtn: "Call 1930", portalBtn: "Report at cybercrime.gov.in",
+    stepsTitle: "If you have been cheated",
+    steps: [
+      "Call 1930 immediately. Quick reporting gives the best chance of stopping the money.",
+      "Tell your bank or UPI app and ask them to block the card, UPI or account.",
+      "Keep screenshots, phone numbers, UPI IDs, transaction IDs and messages as proof. Do not delete them.",
+      "File a complaint at cybercrime.gov.in.",
+      "Keep ready: your name and mobile number, bank name, amount lost, UPI ID or account number, transaction ID and a short description of what happened.",
+      "Change your passwords. Never share OTP, PIN or CVV with anyone."
+    ],
+    dispTitle: "Display settings", langLabel: "Language",
+    themeLabel: "Theme", themeDark: "Dark", themeLight: "Light", themeContrast: "High contrast",
+    sizeLabel: "Text size", sizeS: "Small", sizeM: "Medium", sizeL: "Large",
+    motionLabel: "Animations", motionOn: "On", motionOff: "Off",
+    tipsTitle: "Quick safety tips",
+    tips: [
+      "Never share your OTP, PIN or CVV. Banks never ask for them.",
+      "Do not click links from unknown senders.",
+      "Verify urgent money requests through another trusted channel, such as a phone call to the saved number.",
+      "If it sounds too good to be true, it is probably a scam."
+    ],
+    privTitle: "Privacy & security",
+    privText: "This tool does not save your messages. Images are read on your own device and are never uploaded. The connection is encrypted (HTTPS). Please do not paste real OTPs, passwords or card numbers.",
+    badge: "Secure connection",
+    how1t: "1. Paste or add screenshots", how1d: "Paste the message or add screenshots. Text is read on your device.",
+    how2t: "2. We scan for warning signs", how2d: "Urgency, fake prizes, OTP requests, suspicious links and more are checked.",
+    how3t: "3. Get clear advice", how3d: "See the risk meter, why each sign is dangerous and what to do next.",
+    inputLabel: "Message to check", placeholder: "Paste the message here (any language, up to 5000 characters)...",
+    hint: "English, Telugu, Hindi and other Indian languages",
+    imgTitle: "Add screenshots (optional)",
+    imgDrop: "Drag & drop, click to choose, or paste (Ctrl+V). Up to 5 images, 8 MB each.",
+    imgPrivacy: "Images are read on your device. They are never uploaded; only the extracted text is analysed. Please check the extracted text and fix any mistakes.",
+    ocrLang: "Language in the image", ocrEng: "English", ocrTel: "English + Telugu (mixed)", ocrTelOnly: "Telugu", ocrWarn: "Telugu and Hindi text in images is read less accurately. If the text looks wrong, copy it from the image with your phone (for example Google Lens) and paste it here.", ocrHin: "English + Hindi",
+    ocrLoading: "Loading the image reader (first time only)…", ocrReading: "Reading text…", ocrDone: "Text added Please check it and fix any mistakes",
+    ocrNone: "No text found", ocrFail: "Could not read this image", removeImg: "Remove image",
+    errImgType: "Only PNG, JPG or WebP images are allowed.", errImgSize: "Each image must be under 8 MB.", errImgCount: "You can add up to 5 images.",
+    truncated: "The text was cut to the 5000-character limit.",
+    exLabel: "Try an example:", ex1: "Prize scam", ex2: "OTP scam", ex3: "Normal chat",
+    analyze: "Analyze message", clear: "Clear",
+    foundTitle: "Warning signs found", actionTitle: "What you should do",
+    none: "No warning signs detected.", score: "Indicator score", ml: "ML similarity to known scam examples", detectedLabel: "Detected language",
+    gauge: "Risk meter", scanning: "Scanning for warning signs…", working: "Analyzing…",
+    voiceTitle: "Voice assistant", voiceOnLabel: "Read the warning aloud", voiceLangLabel: "Voice language",
+    voiceGenderLabel: "Voice", gFemale: "Female", gMale: "Male", voiceSpeedLabel: "Speed", spSlow: "Slow", spNormal: "Normal", spFast: "Fast",
+    voiceVoiceLabel: "Choose a specific voice", voiceAuto: "Automatic", voiceTest: "Test voice", listen: "Listen", stopListen: "Stop",
+    dangerBanner: "This message looks risky. Do not click any link or open any file in it.",
+    voiceUnsupported: "Your browser does not support voice. Try Chrome, Edge or Safari.",
+    voiceNoLang: "No {l} voice is installed on this device, so English is used instead. To add one: Android – Settings › Text-to-speech › Google › Install voice data; iPhone – Settings › Accessibility › Spoken Content › Voices. Microsoft Edge often includes Telugu voices.",
+    voicePitchF: "This device has no separate male and female voices for {l}, so the pitch is raised to sound more feminine.",
+    voicePitchM: "This device has no separate male and female voices for {l}, so the pitch is lowered to sound more masculine.",
+    voiceUsing: "Using voice: {n}", voiceClips: "Natural recorded {l} voice ({g}).",
+    voiceNone: "No voices were found on this device or browser, so the voice assistant cannot speak.",
+    vlName: {en: "English", te: "Telugu", hi: "Hindi"},
+    emText: "Already sent money or shared an OTP? Call 1930 now.", emBtn: "Call 1930",
+    footerHelp: "Cyber Crime Helpline: 1930  ·  cybercrime.gov.in",
+    footerNote: "Made for community awareness (CSP project). It can make mistakes, so always verify independently.",
+    errBusy: "Too many requests. Please wait a minute and try again.",
+    errGeneric: "Something went wrong. Please try again.",
+    errEmpty: "Please paste a message or add a screenshot first.",
+    icons: {urgency:"", prize:"", money:"", link:"", sensitive:"", threat:"", impersonation:"", new_payee:"", too_good:""}
+  },
+  te: {
+    title: "AI మోసం అవగాహన సాధనం", eyebrow: "మోసం అవగాహన", heroTitle: "నమ్మే ముందు సందేశాన్ని పరిశీలించండి.",
+    tagline: "అనుమానాస్పద సందేశాన్ని పేస్ట్ చేయండి లేదా స్క్రీన్‌షాట్లు జోడించండి, అందులో ఏ మోసం హెచ్చరిక సంకేతాలు ఉన్నాయో చూడండి.",
+    banner: "మోసంలో డబ్బు పోయిందా? వెంటనే 1930 కు కాల్ చేయండి (జాతీయ సైబర్ క్రైమ్ హెల్ప్‌లైన్)",
+    openSettings: "సెట్టింగ్‌లు", closeSettings: "సెట్టింగ్‌లను మూసివేయండి", setTitle: "సెట్టింగ్‌లు",
+    hlTitle: "సైబర్ క్రైమ్ హెల్ప్‌లైన్", hlSub: "ఆన్‌లైన్ మోసాలకు జాతీయ హెల్ప్‌లైన్, 24 గంటలూ అందుబాటులో",
+    callBtn: "1930 కు కాల్ చేయండి", portalBtn: "cybercrime.gov.in లో ఫిర్యాదు చేయండి",
+    stepsTitle: "మీరు మోసపోయినట్లయితే",
+    steps: [
+      "వెంటనే 1930 కు కాల్ చేయండి. త్వరగా ఫిర్యాదు చేస్తే డబ్బును ఆపే అవకాశం ఎక్కువ.",
+      "మీ బ్యాంక్ లేదా UPI యాప్‌కు తెలియజేసి కార్డ్, UPI లేదా ఖాతాను బ్లాక్ చేయమని చెప్పండి.",
+      "స్క్రీన్‌షాట్లు, ఫోన్ నంబర్లు, UPI ఐడీలు, లావాదేవీ ఐడీలు, సందేశాలను రుజువుగా భద్రపరచండి. వాటిని తొలగించవద్దు.",
+      "cybercrime.gov.in లో ఫిర్యాదు నమోదు చేయండి.",
+      "సిద్ధంగా ఉంచుకోండి: మీ పేరు, మొబైల్ నంబర్, బ్యాంక్ పేరు, పోయిన మొత్తం, UPI ID లేదా ఖాతా నంబర్, లావాదేవీ ID, ఏమి జరిగిందో సంక్షిప్త వివరణ.",
+      "పాస్‌వర్డ్‌లు మార్చండి. OTP, PIN, CVV ను ఎవరితోనూ పంచుకోవద్దు."
+    ],
+    dispTitle: "ప్రదర్శన సెట్టింగ్‌లు", langLabel: "భాష",
+    themeLabel: "థీమ్", themeDark: "డార్క్", themeLight: "లైట్", themeContrast: "హై కాంట్రాస్ట్",
+    sizeLabel: "అక్షరాల పరిమాణం", sizeS: "చిన్నది", sizeM: "మధ్యస్థం", sizeL: "పెద్దది",
+    motionLabel: "యానిమేషన్లు", motionOn: "ఆన్", motionOff: "ఆఫ్",
+    tipsTitle: "త్వరిత భద్రతా సూచనలు",
+    tips: [
+      "OTP, PIN, CVV ను ఎవరితోనూ పంచుకోవద్దు. బ్యాంకులు వాటిని ఎప్పుడూ అడగవు.",
+      "తెలియని వారి నుండి వచ్చిన లింక్‌లను క్లిక్ చేయవద్దు.",
+      "అత్యవసర డబ్బు అభ్యర్థనలను మరో నమ్మదగిన మార్గంలో (సేవ్ చేసిన నంబర్‌కు కాల్ చేసి) నిర్ధారించుకోండి.",
+      "నమ్మశక్యం కాని మంచి ఆఫర్ అయితే అది మోసమే అయ్యే అవకాశం ఎక్కువ."
+    ],
+    privTitle: "గోప్యత & భద్రత",
+    privText: "ఈ సాధనం మీ సందేశాలను నిల్వ చేయదు. చిత్రాలు మీ పరికరంలోనే చదవబడతాయి, అప్‌లోడ్ చేయబడవు. కనెక్షన్ ఎన్‌క్రిప్ట్ చేయబడింది (HTTPS). నిజమైన OTP, పాస్‌వర్డ్‌లు లేదా కార్డ్ నంబర్లను పేస్ట్ చేయవద్దు.",
+    badge: "సురక్షిత కనెక్షన్",
+    how1t: "1. పేస్ట్ చేయండి లేదా స్క్రీన్‌షాట్లు జోడించండి", how1d: "సందేశాన్ని పేస్ట్ చేయండి లేదా స్క్రీన్‌షాట్లు జోడించండి. టెక్స్ట్ మీ పరికరంలోనే చదవబడుతుంది.",
+    how2t: "2. హెచ్చరిక సంకేతాల కోసం స్కాన్ చేస్తాం", how2d: "తొందర, నకిలీ బహుమతులు, OTP అభ్యర్థనలు, అనుమానాస్పద లింక్‌లు మొదలైనవి తనిఖీ చేయబడతాయి.",
+    how3t: "3. స్పష్టమైన సలహా పొందండి", how3d: "రిస్క్ మీటర్, ప్రతి సంకేతం ఎందుకు ప్రమాదకరమో, తర్వాత ఏమి చేయాలో చూడండి.",
+    inputLabel: "పరిశీలించాల్సిన సందేశం", placeholder: "సందేశాన్ని ఇక్కడ పేస్ట్ చేయండి (ఏ భాషలోనైనా, 5000 అక్షరాల వరకు)...",
+    hint: "ఇంగ్లీష్, తెలుగు, హిందీ మరియు ఇతర భారతీయ భాషలు",
+    imgTitle: "స్క్రీన్‌షాట్లు జోడించండి (ఐచ్ఛికం)",
+    imgDrop: "ఇక్కడ డ్రాగ్ & డ్రాప్ చేయండి, క్లిక్ చేసి ఎంచుకోండి లేదా పేస్ట్ (Ctrl+V) చేయండి. గరిష్టంగా 5 చిత్రాలు, ఒక్కొక్కటి 8 MB.",
+    imgPrivacy: "చిత్రాలు మీ పరికరంలోనే చదవబడతాయి. అవి ఎప్పుడూ అప్‌లోడ్ చేయబడవు; తీసిన టెక్స్ట్ మాత్రమే విశ్లేషించబడుతుంది. తీసిన టెక్స్ట్‌ను పరిశీలించి తప్పులు సరిచేయండి.",
+    ocrLang: "చిత్రంలోని భాష", ocrEng: "ఇంగ్లీష్", ocrTel: "ఇంగ్లీష్ + తెలుగు (మిశ్రమం)", ocrTelOnly: "తెలుగు", ocrWarn: "చిత్రాలలోని తెలుగు, హిందీ అక్షరాలు తక్కువ కచ్చితత్వంతో చదవబడతాయి. టెక్స్ట్ తప్పుగా ఉంటే, మీ ఫోన్‌లో (ఉదా. Google Lens) చిత్రం నుండి టెక్స్ట్ కాపీ చేసి ఇక్కడ పేస్ట్ చేయండి.", ocrHin: "ఇంగ్లీష్ + హిందీ",
+    ocrLoading: "చిత్రం చదివే సాధనాన్ని లోడ్ చేస్తోంది (మొదటిసారి మాత్రమే)…", ocrReading: "టెక్స్ట్ చదువుతోంది…", ocrDone: "టెక్స్ట్ చేర్చబడింది దయచేసి సరిచూసి తప్పులను సరిచేయండి",
+    ocrNone: "టెక్స్ట్ కనబడలేదు", ocrFail: "ఈ చిత్రాన్ని చదవలేకపోయాం", removeImg: "చిత్రాన్ని తొలగించండి",
+    errImgType: "PNG, JPG లేదా WebP చిత్రాలు మాత్రమే అనుమతించబడతాయి.", errImgSize: "ప్రతి చిత్రం 8 MB కంటే తక్కువ ఉండాలి.", errImgCount: "గరిష్టంగా 5 చిత్రాలు మాత్రమే జోడించవచ్చు.",
+    truncated: "టెక్స్ట్ 5000 అక్షరాల పరిమితికి కుదించబడింది.",
+    exLabel: "ఉదాహరణ ప్రయత్నించండి:", ex1: "బహుమతి మోసం", ex2: "OTP మోసం", ex3: "సాధారణ సందేశం",
+    analyze: "సందేశాన్ని విశ్లేషించండి", clear: "క్లియర్",
+    foundTitle: "గుర్తించిన హెచ్చరిక సంకేతాలు", actionTitle: "మీరు ఏం చేయాలి",
+    none: "హెచ్చరిక సంకేతాలు కనిపించలేదు.", score: "సూచిక స్కోర్", ml: "తెలిసిన మోసం ఉదాహరణలతో ML పోలిక", detectedLabel: "గుర్తించిన భాష",
+    gauge: "రిస్క్ మీటర్", scanning: "హెచ్చరిక సంకేతాల కోసం స్కాన్ చేస్తోంది…", working: "విశ్లేషిస్తోంది…",
+    voiceTitle: "వాయిస్ అసిస్టెంట్", voiceOnLabel: "హెచ్చరికను బిగ్గరగా చదవండి", voiceLangLabel: "వాయిస్ భాష",
+    voiceGenderLabel: "స్వరం", gFemale: "స్త్రీ", gMale: "పురుషుడు", voiceSpeedLabel: "వేగం", spSlow: "నెమ్మది", spNormal: "సాధారణం", spFast: "వేగంగా",
+    voiceVoiceLabel: "నిర్దిష్ట వాయిస్ ఎంచుకోండి", voiceAuto: "ఆటోమేటిక్", voiceTest: "వాయిస్ పరీక్షించండి", listen: "వినండి", stopListen: "ఆపండి",
+    dangerBanner: "ఈ సందేశం ప్రమాదకరంగా కనిపిస్తోంది. దీనిలోని ఏ లింక్‌ను క్లిక్ చేయవద్దు, ఏ ఫైల్‌ను తెరవవద్దు.",
+    voiceUnsupported: "మీ బ్రౌజర్ వాయిస్‌కు మద్దతు ఇవ్వదు. Chrome, Edge లేదా Safari ప్రయత్నించండి.",
+    voiceNoLang: "ఈ పరికరంలో {l} వాయిస్ లేదు, కాబట్టి బదులుగా ఇంగ్లీష్ వాయిస్ వాడబడుతోంది. వాయిస్ జోడించడానికి: Android – సెట్టింగ్‌లు › టెక్స్ట్-టు-స్పీచ్ › Google › వాయిస్ డేటా ఇన్‌స్టాల్ చేయండి; iPhone – సెట్టింగ్‌లు › యాక్సెసిబిలిటీ › స్పోకెన్ కంటెంట్ › వాయిస్‌లు. Microsoft Edge లో తరచుగా తెలుగు వాయిస్‌లు ఉంటాయి.",
+    voicePitchF: "ఈ పరికరంలో {l} కు ప్రత్యేక పురుష, స్త్రీ వాయిస్‌లు లేవు, కాబట్టి స్త్రీ స్వరంలా వినిపించేందుకు స్వరస్థాయి పెంచబడింది.",
+    voicePitchM: "ఈ పరికరంలో {l} కు ప్రత్యేక పురుష, స్త్రీ వాయిస్‌లు లేవు, కాబట్టి పురుష స్వరంలా వినిపించేందుకు స్వరస్థాయి తగ్గించబడింది.",
+    voiceUsing: "వాడుతున్న వాయిస్: {n}", voiceClips: "సహజమైన రికార్డ్ చేసిన {l} వాయిస్ ({g}).",
+    voiceNone: "ఈ పరికరం లేదా బ్రౌజర్‌లో వాయిస్‌లు కనుగొనబడలేదు, కాబట్టి వాయిస్ అసిస్టెంట్ మాట్లాడలేదు.",
+    vlName: {en: "ఇంగ్లీష్", te: "తెలుగు", hi: "హిందీ"},
+    emText: "ఇప్పటికే డబ్బు పంపారా లేదా OTP చెప్పారా? వెంటనే 1930 కు కాల్ చేయండి.", emBtn: "1930 కు కాల్ చేయండి",
+    footerHelp: "సైబర్ క్రైమ్ హెల్ప్‌లైన్: 1930  ·  cybercrime.gov.in",
+    footerNote: "సమాజ అవగాహన కోసం రూపొందించబడింది (CSP ప్రాజెక్ట్). ఇందులో తప్పులు ఉండవచ్చు, కాబట్టి ఎల్లప్పుడూ స్వతంత్రంగా నిర్ధారించుకోండి.",
+    errBusy: "చాలా ఎక్కువ అభ్యర్థనలు. దయచేసి ఒక నిమిషం ఆగి మళ్లీ ప్రయత్నించండి.",
+    errGeneric: "ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.",
+    errEmpty: "దయచేసి ముందుగా సందేశాన్ని పేస్ట్ చేయండి లేదా స్క్రీన్‌షాట్ జోడించండి.",
+    icons: {urgency:"", prize:"", money:"", link:"", sensitive:"", threat:"", impersonation:"", new_payee:"", too_good:""}
+  }
+};
+const EXAMPLES = {
+  en: ["Congratulations! You have won ₹50,000. Click this link immediately to claim your reward. http://bit.ly/claim-now",
+       "URGENT: Your bank account is blocked. Share your OTP now to unblock it.",
+       "Hi, are we still meeting for lunch tomorrow at 1 pm?"],
+  te: ["అభినందనలు! మీరు ₹50,000 గెలుచుకున్నారు. బహుమతి పొందడానికి వెంటనే ఈ లింక్ క్లిక్ చేయండి",
+       "మీ ఖాతా బ్లాక్ అవుతుంది. వెంటనే మీ ఓటీపీ చెప్పండి",
+       "ఈ రోజు సాయంత్రం కలుద్దాం"]
+};
+
+let lang = "en";
+const $ = (id) => document.getElementById(id);
+const root = document.documentElement;
+const motionOn = () => root.dataset.motion === "on" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+function load(k, d) { try { return localStorage.getItem(k) || d; } catch (e) { return d; } }
+function clearNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+function fillList(el, items) { clearNode(el); items.forEach((t) => { const li = document.createElement("li"); li.textContent = t; el.appendChild(li); }); }
+
+/* ===== language ===== */
+function applyLang() {
+  const u = UI[lang];
+  root.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach((el) => { if (u[el.dataset.i18n] !== undefined) el.textContent = u[el.dataset.i18n]; });
+  document.querySelectorAll("[data-i18n-ph]").forEach((el) => { el.placeholder = u[el.dataset.i18nPh]; });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => { el.setAttribute("aria-label", u[el.dataset.i18nAria]); });
+  fillList($("steps"), u.steps);
+  fillList($("tips"), u.tips);
+  $("langSel").value = lang;
+  if (!ocrChosenByUser) $("ocrLang").value = lang === "te" ? "tel" : "eng";
+  renderThumbs();
+  voiceRefresh();
+}
+function setLang(l) {
+  lang = l;
+  $("chooser").classList.add("hidden");
+  applyLang();
+  if (!$("out").classList.contains("hidden") && $("msg").value.trim()) run(false);
+}
+
+/* ===== display settings ===== */
+function markPressed(segId, attr, value) {
+  document.querySelectorAll("#" + segId + " button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[attr] === value)));
+}
+function setSetting(attr, value) { root.setAttribute("data-" + attr, value); markPressed(attr + "Seg", attr, value); store("csp_" + attr, value); }
+function openSide() { $("sidebar").classList.add("open"); $("scrim").classList.remove("hidden"); }
+function closeSide() { $("sidebar").classList.remove("open"); $("scrim").classList.add("hidden"); }
+
+/* ===== messages ===== */
+function showError(t) { const b = $("errorBox"); b.textContent = t; b.classList.remove("hidden"); }
+function showInfo(t) { const b = $("infoBox"); b.textContent = t; b.classList.remove("hidden"); }
+function hideMessages() { $("errorBox").classList.add("hidden"); $("infoBox").classList.add("hidden"); }
+function updateCounter() { $("counter").textContent = $("msg").value.length + " / " + MAX_CHARS; }
+
+/* ===== images + in-browser OCR (images never leave the device) ===== */
+let images = [], imgSeq = 0, ocrChosenByUser = false, tessPromise = null, worker = null, workerLangs = "", ocrQueue = Promise.resolve();
+
+function loadTesseract() {
+  if (window.Tesseract) return Promise.resolve();
+  if (!tessPromise) tessPromise = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "/static/ocr/tesseract.min.js"; s.onload = resolve; s.onerror = () => { tessPromise = null; reject(new Error("load")); };
+    document.head.appendChild(s);
+  });
+  return tessPromise;
+}
+async function getWorker(langs, logger) {
+  await loadTesseract();
+  if (worker && workerLangs === langs) { worker.__logger.fn = logger; return worker; }
+  if (worker) { try { await worker.terminate(); } catch (e) {} worker = null; }
+  const holder = { fn: logger };
+  worker = await Tesseract.createWorker(langs, 1, {
+    workerPath: "/static/ocr/worker.min.js", corePath: "/static/ocr/core", langPath: "/ocr-data", workerBlobURL: false,
+    logger: (m) => { if (holder.fn) holder.fn(m); }
+  });
+  worker.__logger = holder; workerLangs = langs;
+  return worker;
+}
+function prepareImage(file) {   // shrink/enlarge, grey-scale and invert dark screenshots so the reader is more accurate
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const longest = Math.max(img.width, img.height); let scale = 1;
+      if (longest > 2600) scale = 2600 / longest; else if (img.width < 1000) scale = Math.min(2, 1000 / img.width);
+      const c = document.createElement("canvas"); c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+      const g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(img, 0, 0, c.width, c.height);
+      const d = g.getImageData(0, 0, c.width, c.height), px = d.data; let sum = 0, n = 0;
+      for (let i = 0; i < px.length; i += 4) { const y = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]; px[i] = px[i + 1] = px[i + 2] = y; if ((i / 4) % 7 === 0) { sum += y; n++; } }
+      if (sum / n < 120) for (let i = 0; i < px.length; i += 4) { px[i] = px[i + 1] = px[i + 2] = 255 - px[i]; }
+      g.putImageData(d, 0, 0); URL.revokeObjectURL(url);
+      c.toBlob((b) => (b ? resolve(b) : reject(new Error("blob"))), "image/png");
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("img")); };
+    img.src = url;
+  });
+}
+function appendText(extra) {
+  const ta = $("msg"); const joined = (ta.value ? ta.value.replace(/\s+$/, "") + "\n\n" : "") + extra;
+  if (joined.length > MAX_CHARS) { ta.value = joined.slice(0, MAX_CHARS); showInfo(UI[lang].truncated); } else { ta.value = joined; }
+  updateCounter();
+}
+function setStatus(item, text, pct) { item.status = text; if (pct !== undefined) item.pct = pct; renderThumbs(); }
+
+function processImage(item) {
+  ocrQueue = ocrQueue.then(async () => {
+    if (!images.includes(item)) return;
+    const u = () => UI[lang];
+    try {
+      setStatus(item, u().ocrLoading, 2);
+      const langs = $("ocrLang").value;
+      const w = await getWorker(langs, (m) => {
+        if (m.status === "recognizing text") setStatus(item, u().ocrReading, Math.round(10 + m.progress * 90));
+        else if (m.status && m.status.indexOf("loading") === 0) setStatus(item, u().ocrLoading, 5);
+      });
+      const blob = await prepareImage(item.file);
+      setStatus(item, u().ocrReading, 10);
+      const res = await w.recognize(blob);
+      const text = (res.data.text || "").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+      if (text.length < 3) { setStatus(item, u().ocrNone, 100); return; }
+      appendText(text); setStatus(item, u().ocrDone, 100);
+      if ((langs.indexOf("tel") > -1 || langs.indexOf("hin") > -1) && $("infoBox").classList.contains("hidden")) showInfo(u().ocrWarn);
+    } catch (e) { setStatus(item, UI[lang].ocrFail, 0); }
+  });
+  return ocrQueue;
+}
+function addFiles(list) {
+  hideMessages();
+  const u = UI[lang];
+  Array.from(list).forEach((file) => {
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) { showError(u.errImgType); return; }
+    if (file.size > MAX_BYTES) { showError(u.errImgSize); return; }
+    if (images.length >= MAX_IMAGES) { showError(u.errImgCount); return; }
+    const item = { id: ++imgSeq, file: file, url: URL.createObjectURL(file), status: "", pct: 0 };
+    images.push(item); renderThumbs(); processImage(item);
+  });
+}
+function removeImage(item) {
+  URL.revokeObjectURL(item.url); images = images.filter((i) => i !== item); renderThumbs();
+}
+function renderThumbs() {
+  const box = $("thumbs"); clearNode(box);
+  $("ocrRow").classList.toggle("hidden", images.length === 0);
+  images.forEach((item) => {
+    const t = document.createElement("div"); t.className = "thumb";
+    const im = document.createElement("img"); im.src = item.url; im.alt = ""; t.appendChild(im);
+    const bar = document.createElement("div"); bar.className = "pbar"; const inner = document.createElement("div"); inner.style.width = item.pct + "%"; bar.appendChild(inner); t.appendChild(bar);
+    const st = document.createElement("div"); st.className = "st"; st.textContent = item.status; t.appendChild(st);
+    const x = document.createElement("button"); x.type = "button"; x.className = "x"; x.textContent = "✕"; x.setAttribute("aria-label", UI[lang].removeImg);
+    x.addEventListener("click", () => removeImage(item)); t.appendChild(x);
+    box.appendChild(t);
+  });
+}
+
+/* ===== results ===== */
+function countUp(el, target) {
+  if (!motionOn()) { el.textContent = target; return; }
+  const start = performance.now(), dur = 1200;
+  (function tick(now) { const p = Math.min(1, (now - start) / dur); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); })(start);
+}
+function renderResult(d) {
+  const u = UI[lang];
+  $("out").classList.remove("hidden");
+  $("level").textContent = d.level;
+  $("indScore").textContent = d.score + "/100";
+  $("indBar").dataset.level = d.indicators_found.length === 0 ? "safe" : d.score >= 60 ? "high" : d.score >= 35 ? "mid" : "low";
+  $("vIco").textContent = d.indicators_found.length === 0 ? "✓" : d.score >= 60 ? "!" : d.score >= 35 ? "!" : "i";
+  const needle = $("needle"); needle.style.transform = "rotate(-90deg)";
+  void needle.getBoundingClientRect();
+  needle.style.transform = "rotate(" + (d.score / 100 * 180 - 90) + "deg)";
+  countUp($("scoreNum"), d.score);
+  $("gaugeTitle").textContent = u.gauge;
+  $("scores").textContent = u.score + ": " + d.score + "/100" + (d.ml_score !== null ? "  |  " + u.ml + ": " + d.ml_score + "%" : "");
+  $("detected").textContent = d.detected_languages ? u.detectedLabel + ": " + d.detected_languages : "";
+  $("explain").textContent = d.explanation;
+  $("noteText").textContent = d.language_note || "";
+  $("noteCard").classList.toggle("hidden", !d.language_note);
+  $("emergency").classList.toggle("hidden", d.score < 35);
+  $("emText").textContent = u.emText; $("emBtn").textContent = u.emBtn;
+  $("dangerBanner").textContent = u.dangerBanner; $("dangerBanner").classList.toggle("hidden", d.score < 35);
+  updateListenBtn();
+
+  const found = $("found"); clearNode(found);
+  if (!d.indicators_found.length) {
+    const p = document.createElement("p"); p.className = "why"; p.textContent = u.none; found.appendChild(p);
+  } else {
+    d.indicators_found.forEach((i, idx) => {
+      const c = document.createElement("div"); c.className = "sign";
+      const b = document.createElement("b"); b.textContent = i.label;
+      const why = document.createElement("div"); why.className = "why"; why.textContent = i.why;
+      c.appendChild(b); c.appendChild(why); found.appendChild(c);
+    });
+  }
+  const acts = $("actions"); clearNode(acts);
+  d.actions.forEach((a, idx) => { const li = document.createElement("li"); li.textContent = a; acts.appendChild(li); });
+  $("disc").textContent = d.disclaimer;
+}
+async function run(speakIt = true) {
+  const u = UI[lang], message = $("msg").value;
+  hideMessages(); stopSpeaking(); if (speakIt) primeVoice();
+  if (!message.trim()) { showError(u.errEmpty); return; }
+  const btn = $("analyzeBtn"); btn.disabled = true; btn.textContent = u.working;
+  $("out").classList.add("hidden"); $("scanText").textContent = u.scanning; $("scanner").classList.remove("hidden");
+  const minShow = new Promise((r) => setTimeout(r, motionOn() ? 900 : 0));
+  try {
+    const res = await fetch("/api/analyze", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({message: message, lang: lang}) });
+    await minShow;
+    $("scanner").classList.add("hidden");
+    if (res.status === 429) showError(u.errBusy);
+    else if (!res.ok) showError(u.errGeneric);
+    else { const d = await res.json(); lastResult = d; renderResult(d); if (speakIt && VOICE.on && voiceSupported()) speakResult(d); $("out").scrollIntoView({behavior: motionOn() ? "smooth" : "auto", block: "start"}); }
+  } catch (e) { $("scanner").classList.add("hidden"); showError(u.errGeneric); }
+  finally { btn.disabled = false; btn.textContent = UI[lang].analyze; }
+}
+
+/* ===== voice assistant: speaks the warning aloud (runs in the browser, uses the device's own voices) ===== */
+const SPEECH = {
+  en: {
+    high: "Warning! This message looks risky and may be a scam. Do not click any link, and do not open any file or attachment from it. Do not share your OTP, PIN or password. Do not send money. Check with the sender through another trusted way. If you have already lost money, call 1 9 3 0 right away.",
+    mid: "Be careful. This message shows some scam warning signs. Please do not click any link or open any file in it until you have checked that it is genuine.",
+    why: "Warning signs found:",
+    safe: "No common scam signs were found. But stay careful, and never share your OTP with anyone.",
+    test: "This is a test of the voice assistant. Do not click unknown links.",
+    reasons: { urgency: "it is trying to rush you", prize: "it promises an unexpected prize", money: "it asks for money or a payment", link: "it has a suspicious link",
+      sensitive: "it asks for your OTP or password", threat: "it uses threats or fear", impersonation: "someone may be pretending to be a friend or an official",
+      new_payee: "it gives new payment details", too_good: "it promises easy money" }
+  },
+  te: {
+    high: "హెచ్చరిక! ఈ సందేశం ప్రమాదకరంగా కనిపిస్తోంది, ఇది మోసం కావచ్చు. దీనిలోని ఏ లింక్‌ను క్లిక్ చేయవద్దు, ఏ ఫైల్‌ను లేదా అటాచ్‌మెంట్‌ను తెరవవద్దు. మీ OTP, PIN లేదా పాస్‌వర్డ్‌ను ఎవరితోనూ పంచుకోవద్దు. డబ్బు పంపవద్దు. వేరే నమ్మదగిన మార్గంలో పంపినవారిని సంప్రదించి నిర్ధారించుకోండి. ఇప్పటికే డబ్బు పోయి ఉంటే, వెంటనే 1 9 3 0 కు కాల్ చేయండి.",
+    mid: "జాగ్రత్త! ఈ సందేశంలో కొన్ని మోసం హెచ్చరిక సంకేతాలు ఉన్నాయి. ఇది నిజమైనదని నిర్ధారించుకునే వరకు దీనిలోని ఏ లింక్‌ను క్లిక్ చేయవద్దు, ఏ ఫైల్‌ను తెరవవద్దు.",
+    why: "కనిపించిన హెచ్చరిక సంకేతాలు:",
+    safe: "సాధారణ మోసం సంకేతాలు ఏవీ కనిపించలేదు. అయినా జాగ్రత్తగా ఉండండి, మీ OTP ని ఎవరితోనూ పంచుకోవద్దు.",
+    test: "ఇది వాయిస్ అసిస్టెంట్ పరీక్ష. తెలియని లింక్‌లను క్లిక్ చేయవద్దు.",
+    reasons: { urgency: "తొందర పెడుతోంది", prize: "ఊహించని బహుమతి ఆశ చూపుతోంది", money: "డబ్బు లేదా చెల్లింపు అడుగుతోంది", link: "అనుమానాస్పద లింక్ ఉంది",
+      sensitive: "OTP లేదా పాస్‌వర్డ్ అడుగుతోంది", threat: "బెదిరిస్తోంది", impersonation: "ఎవరో వేరొకరిలా నటిస్తున్నారేమో",
+      new_payee: "కొత్త చెల్లింపు వివరాలు ఇస్తోంది", too_good: "సులభంగా డబ్బు వస్తుందని చెబుతోంది" }
+  },
+  hi: {
+    high: "चेतावनी! यह संदेश जोखिम भरा लगता है और धोखाधड़ी हो सकता है। इसमें दिए किसी लिंक पर क्लिक न करें, और कोई फ़ाइल या अटैचमेंट न खोलें। अपना OTP, पिन या पासवर्ड किसी को न बताएं। पैसे न भेजें। भेजने वाले से किसी दूसरे भरोसेमंद तरीके से जाँच करें। अगर पैसे पहले ही जा चुके हैं, तो तुरंत 1 9 3 0 पर कॉल करें।",
+    mid: "सावधान! इस संदेश में धोखाधड़ी के कुछ संकेत हैं। जब तक आप जाँच न लें कि यह असली है, इसके किसी लिंक पर क्लिक न करें और कोई फ़ाइल न खोलें।",
+    why: "मिले संकेत:",
+    safe: "कोई आम धोखाधड़ी संकेत नहीं मिला। फिर भी सावधान रहें, अपना OTP किसी को न बताएं।",
+    test: "यह वॉइस असिस्टेंट का परीक्षण है। अनजान लिंक पर क्लिक न करें।",
+    reasons: { urgency: "यह आपको जल्दबाज़ी में डाल रहा है", prize: "यह अचानक इनाम का लालच दे रहा है", money: "यह पैसे या भुगतान माँग रहा है", link: "इसमें संदिग्ध लिंक है",
+      sensitive: "यह OTP या पासवर्ड माँग रहा है", threat: "यह डरा या धमका रहा है", impersonation: "कोई दोस्त या अधिकारी बनकर बात कर रहा हो सकता है",
+      new_payee: "यह नए भुगतान विवरण दे रहा है", too_good: "यह आसान कमाई का वादा करता है" }
+  }
+};
+const RATES = { slow: 0.8, normal: 1, fast: 1.2 };
+const FEMALE_RX = /female|woman|girl|zira|hazel|susan|samantha|karen|moira|tessa|fiona|veena|heera|kalpana|shruti|swara|neerja|aditi|raveena|lekha|geeta|priya|ananya|sangeeta|aarohi|isha|chilka/i;
+const MALE_RX = /\bmale\b|\bman\b|david|mark|george|james|daniel|fred|rishi|ravi|hemant|prabhat|madhur|mohan|rahul|vijay|arjun|kabir|manohar|rajesh|sunil|anil/i;
+const NAME_RX = { te: /telugu|తెలుగు/i, hi: /hindi|हिन्दी|हिंदी/i };
+const LANG3 = { eng: "en", tel: "te", hin: "hi" };
+const LANGTAG = { en: "en-IN", te: "te-IN", hi: "hi-IN" };
+const VOICE = { on: load("csp_von", "on") === "on", lang: load("csp_vlang", ""), gender: load("csp_vgender", "female"), speed: load("csp_vspeed", "normal"), name: load("csp_vvoice", "") };
+let voiceList = [], lastResult = null, speaking = false, speakToken = 0;
+
+function ttsSupported() { return "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance === "function"; }
+function voiceSupported() { return typeof window.Audio === "function" || ttsSupported(); }
+function refreshVoices() { voiceList = ttsSupported() ? (speechSynthesis.getVoices() || []) : []; }
+function voiceLang() { return VOICE.lang || (lang === "te" ? "te" : "en"); }
+function baseLang(v) { const b = (v.lang || "").toLowerCase().replace(/_/g, "-").split("-")[0]; return LANG3[b] || b; }
+function voicesFor(l) { return voiceList.filter((v) => baseLang(v) === l || (NAME_RX[l] && NAME_RX[l].test(v.name || ""))); }
+function genderOf(v) { if (!v) return ""; if (FEMALE_RX.test(v.name)) return "female"; if (MALE_RX.test(v.name)) return "male"; return ""; }
+// Male = deep and bass in every language. Real male voices get a small drop, female/unknown voices a big drop.
+function pitchFor(v) {
+  const g = genderOf(v);
+  if (VOICE.gender === "male") return g === "male" ? 0.85 : 0.55;
+  return g === "male" ? 1.25 : 1;
+}
+function rateFor() { const r = RATES[VOICE.speed] || 1; return VOICE.gender === "male" ? r * 0.92 : r; }
+function isIN(v) { return /-IN$/i.test((v.lang || "").replace(/_/g, "-")); }
+function pickVoice(l) {
+  const list = voicesFor(l);
+  if (!list.length) return null;
+  const manual = VOICE.name && list.find((v) => v.name === VOICE.name);
+  if (manual) { const g = genderOf(manual); return { voice: manual, pitch: g === VOICE.gender ? (g === "male" ? 0.85 : 1) : pitchFor(manual), how: "manual" }; }
+  // local voices first: online voices (e.g. Google on desktop Chrome) ignore the pitch setting
+  const rank = (a, b) => (Number(isIN(b)) - Number(isIN(a))) || (Number(!!b.localService) - Number(!!a.localService));
+  const same = list.filter((v) => genderOf(v) === VOICE.gender).sort(rank);
+  if (same.length) return { voice: same[0], pitch: pitchFor(same[0]), how: "gender" };
+  const neutral = list.filter((v) => !genderOf(v));
+  const pool = (neutral.length ? neutral : list).slice().sort(rank);
+  const pitch = pitchFor(pool[0]);
+  return { voice: pool[0], pitch: pitch, how: pitch !== 1 ? "pitch" : "auto" };
+}
+function fmt(t, o) { return Object.keys(o).reduce((a, k) => a.split("{" + k + "}").join(o[k]), t); }
+
+function buildSpeech(d, l) {
+  const S = SPEECH[l], keys = d.indicators_found.map((i) => i.key);
+  if (!keys.length) return S.safe;
+  const reasons = keys.map((k) => S.reasons[k]).filter(Boolean);
+  return (d.score >= 60 ? S.high : S.mid) + (reasons.length ? " " + S.why + " " + reasons.join(", ") + "." : "");
+}
+/* natural recorded voice clips (static/audio): same words as the spoken text, played in order */
+const SILENT = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=";
+let player = null;
+function getPlayer() { if (!player && typeof window.Audio === "function") { player = new Audio(); player.preload = "auto"; } return player; }
+function clipNames(d) {
+  const keys = d.indicators_found.map((i) => i.key);
+  if (!keys.length) return ["safe"];
+  return [d.score >= 60 ? "high" : "mid", "why"].concat(keys.map((k) => "r_" + k));
+}
+function clipUrl(l, name) { return "/static/audio/" + l + "_" + VOICE.gender + "_" + name + ".mp3"; }
+function speakClips(names, textFor) {
+  const el = getPlayer();
+  if (!el) { speak(textFor); return; }
+  stopSpeaking();
+  const token = speakToken, l = voiceLang();
+  speaking = true; updateListenBtn();
+  let i = 0, anyPlayed = false;
+  const toBrowserVoice = () => { if (token !== speakToken) return; el.onended = el.onerror = null; speaking = false; speak(textFor); };
+  const next = () => {
+    if (token !== speakToken) return;
+    if (i >= names.length) { speaking = false; updateListenBtn(); return; }
+    el.onended = next;
+    el.onerror = () => { if (token !== speakToken) return; if (!anyPlayed) toBrowserVoice(); else next(); };
+    el.src = clipUrl(l, names[i++]);
+    el.defaultPlaybackRate = el.playbackRate = RATES[VOICE.speed] || 1;
+    el.onplaying = () => { anyPlayed = true; };
+    const pr = el.play();
+    if (pr && pr.catch) pr.catch(() => { if (token !== speakToken) return; if (!anyPlayed) toBrowserVoice(); else next(); });
+  };
+  next();
+}
+function updateListenBtn() { $("listenBtn").textContent = speaking ? UI[lang].stopListen : UI[lang].listen; $("listenBtn").setAttribute("aria-pressed", String(speaking)); }
+function stopSpeaking() { speakToken++; speaking = false; if (player) { try { player.onended = player.onerror = player.onplaying = null; player.pause(); } catch (e) {} } if (ttsSupported()) { try { speechSynthesis.cancel(); } catch (e) {} } updateListenBtn(); }
+function primeVoice() {
+  if (!VOICE.on) return;
+  const el = getPlayer(); if (el) { try { el.src = SILENT; const pr = el.play(); if (pr && pr.catch) pr.catch(() => {}); } catch (e) {} }
+  if (ttsSupported()) { refreshVoices(); try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (e) {} }
+}
+function chunkText(t) {            // short chunks of 1-2 sentences: avoids Chrome's long-text cut-off and Android stutter
+  const parts = t.match(/[^.!?।]+[.!?।]*/g) || [t], out = []; let cur = "";
+  parts.forEach((p) => { p = p.trim(); if (!p) return; if (cur && (cur + " " + p).length > 170) { out.push(cur); cur = p; } else cur = cur ? cur + " " + p : p; });
+  if (cur) out.push(cur);
+  return out;
+}
+function voiceFailNotice(l) { showInfo(fmt(UI[lang].voiceNoLang, { l: UI[lang].vlName[l] })); }
+function speakWith(l, pick, textFor, token, canFallback) {
+  const chunks = chunkText(textFor(l));
+  let i = 0, started = false, watchdog = null;
+  const fail = () => {
+    clearTimeout(watchdog);
+    if (token !== speakToken) return;
+    try { speechSynthesis.cancel(); } catch (e) {}
+    if (canFallback && l !== "en") { voiceFailNotice(l); speakWith("en", pickVoice("en"), textFor, token, false); }
+    else { speaking = false; updateListenBtn(); }
+  };
+  const next = () => {
+    if (token !== speakToken) return;
+    if (i >= chunks.length) { speaking = false; updateListenBtn(); return; }
+    const u = new SpeechSynthesisUtterance(chunks[i++]), v = pick && pick.voice;
+    if (v) u.voice = v;
+    u.lang = v ? (v.lang || LANGTAG[l]).replace(/_/g, "-") : LANGTAG[l];   // Android needs "te-IN", not "te_IN"
+    u.pitch = pick ? pick.pitch : (VOICE.gender === "male" ? 0.55 : 1);
+    u.rate = rateFor();
+    u.onstart = () => { started = true; clearTimeout(watchdog); };
+    u.onend = next;
+    u.onerror = (e) => { if (token !== speakToken || e.error === "canceled" || e.error === "interrupted") return; if (!started) fail(); else next(); };
+    speechSynthesis.speak(u);
+    if (!started) { clearTimeout(watchdog); watchdog = setTimeout(() => { if (!started) fail(); }, 5000); }
+  };
+  next();
+}
+function speak(textFor) {          // browser voice (backup when a clip cannot be played)
+  if (!ttsSupported()) { speaking = false; updateListenBtn(); return; }
+  refreshVoices();
+  const l = voiceLang(), pick = pickVoice(l);   // no installed voice for te/hi: still try the engine's own te-IN / hi-IN voice
+  stopSpeaking();
+  const token = speakToken;
+  speaking = true; updateListenBtn();
+  setTimeout(() => { if (token === speakToken) speakWith(l, pick, textFor, token, true); }, 150);
+}
+function speakResult(d) { speakClips(clipNames(d), (l) => buildSpeech(d, l)); }
+
+function voiceMark(segId, value) { document.querySelectorAll("#" + segId + " button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === value))); }
+function fillVoiceSelect() {
+  const sel = $("vVoice"), u = UI[lang]; clearNode(sel);
+  const auto = document.createElement("option"); auto.value = ""; auto.textContent = u.voiceAuto; sel.appendChild(auto);
+  voicesFor(voiceLang()).forEach((v) => {
+    const o = document.createElement("option"); o.value = v.name; const g = genderOf(v);
+    o.textContent = v.name + (g ? " (" + (g === "female" ? u.gFemale : u.gMale) + ")" : ""); sel.appendChild(o);
+  });
+  sel.value = VOICE.name && voicesFor(voiceLang()).some((v) => v.name === VOICE.name) ? VOICE.name : "";
+}
+function updateVoiceStatus() {
+  const u = UI[lang], box = $("vStatus"), l = voiceLang();
+  if (typeof window.Audio === "function") { box.textContent = fmt(u.voiceClips, { l: u.vlName[l], g: VOICE.gender === "male" ? u.gMale : u.gFemale }); return; }
+  if (!voiceSupported()) { box.textContent = u.voiceUnsupported; return; }
+  if (!voiceList.length) { box.textContent = u.voiceNone; return; }
+  const pick = pickVoice(l);
+  if (!pick) { box.textContent = l === "en" ? "" : fmt(u.voiceNoLang, { l: u.vlName[l] }); return; }
+  if (pick.how === "pitch") box.textContent = fmt(VOICE.gender === "male" ? u.voicePitchM : u.voicePitchF, { l: u.vlName[l] });
+  else box.textContent = fmt(u.voiceUsing, { n: pick.voice.name });
+}
+function voiceRefresh() {
+  const sup = voiceSupported();
+  $("vLang").value = voiceLang(); voiceMark("vOnSeg", VOICE.on ? "on" : "off"); voiceMark("vGenderSeg", VOICE.gender); voiceMark("vSpeedSeg", VOICE.speed);
+  ["vLang", "vVoice", "vTest"].forEach((id) => { $(id).disabled = !sup; });
+  $("listenBtn").classList.toggle("hidden", !sup);
+  fillVoiceSelect(); updateVoiceStatus(); updateListenBtn();
+}
+if (voiceSupported()) {
+  refreshVoices();
+  speechSynthesis.addEventListener("voiceschanged", () => { refreshVoices(); voiceRefresh(); });
+  // Android Chrome often fills the voice list late and sometimes never fires "voiceschanged": poll for a few seconds
+  let tries = 0;
+  const poll = setInterval(() => { const n = voiceList.length; refreshVoices(); if (voiceList.length !== n) voiceRefresh(); if (voiceList.length || ++tries > 12) clearInterval(poll); }, 500);
+}
+
+/* ===== wiring (no inline handlers, so the strict CSP stays on) ===== */
+$("pickEn").addEventListener("click", () => setLang("en"));
+$("pickTe").addEventListener("click", () => setLang("te"));
+$("langSel").addEventListener("change", (e) => setLang(e.target.value));
+$("openSide").addEventListener("click", openSide);
+$("closeSide").addEventListener("click", closeSide);
+$("scrim").addEventListener("click", closeSide);
+$("analyzeBtn").addEventListener("click", () => run(true));
+$("msg").addEventListener("input", updateCounter);
+$("ocrLang").addEventListener("change", () => { ocrChosenByUser = true; });
+$("clearBtn").addEventListener("click", () => {
+  stopSpeaking(); lastResult = null;
+  $("msg").value = ""; updateCounter(); hideMessages(); $("out").classList.add("hidden"); $("scanner").classList.add("hidden");
+  images.forEach((i) => URL.revokeObjectURL(i.url)); images = []; renderThumbs();
+});
+document.querySelectorAll("[data-ex]").forEach((b) => b.addEventListener("click", () => { $("msg").value = EXAMPLES[lang][Number(b.dataset.ex)]; updateCounter(); run(); }));
+document.querySelectorAll("#themeSeg button").forEach((b) => b.addEventListener("click", () => setSetting("theme", b.dataset.theme)));
+document.querySelectorAll("#sizeSeg button").forEach((b) => b.addEventListener("click", () => setSetting("size", b.dataset.size)));
+document.querySelectorAll("#motionSeg button").forEach((b) => b.addEventListener("click", () => { setSetting("motion", b.dataset.motion); }));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSide(); });
+// images: click, keyboard, drag & drop, paste
+const drop = $("drop");
+drop.addEventListener("click", () => $("fileInput").click());
+drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("fileInput").click(); } });
+$("fileInput").addEventListener("change", (e) => { addFiles(e.target.files); e.target.value = ""; });
+["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", (e) => { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+document.addEventListener("paste", (e) => {
+  const files = Array.from((e.clipboardData && e.clipboardData.files) || []).filter((f) => f.type.indexOf("image/") === 0);
+  if (files.length) { e.preventDefault(); addFiles(files); }
+});
+
+/* ===== start: remembered display settings, then always ask for the language ===== */
+
+/* voice controls */
+document.querySelectorAll("#vOnSeg button").forEach((b) => b.addEventListener("click", () => { VOICE.on = b.dataset.v === "on"; store("csp_von", b.dataset.v); if (!VOICE.on) stopSpeaking(); voiceMark("vOnSeg", b.dataset.v); }));
+document.querySelectorAll("#vGenderSeg button").forEach((b) => b.addEventListener("click", () => { VOICE.gender = b.dataset.v; VOICE.name = ""; store("csp_vgender", VOICE.gender); store("csp_vvoice", ""); voiceRefresh(); }));
+document.querySelectorAll("#vSpeedSeg button").forEach((b) => b.addEventListener("click", () => { VOICE.speed = b.dataset.v; store("csp_vspeed", VOICE.speed); voiceMark("vSpeedSeg", VOICE.speed); }));
+$("vLang").addEventListener("change", (e) => { VOICE.lang = e.target.value; VOICE.name = ""; store("csp_vlang", VOICE.lang); store("csp_vvoice", ""); voiceRefresh(); });
+$("vVoice").addEventListener("change", (e) => { VOICE.name = e.target.value; store("csp_vvoice", VOICE.name); updateVoiceStatus(); });
+$("vTest").addEventListener("click", () => { primeVoice(); speakClips(["test"], (l) => SPEECH[l].test); });
+$("listenBtn").addEventListener("click", () => { if (speaking) { stopSpeaking(); } else if (lastResult) { speakResult(lastResult); } });
+
+setSetting("theme", load("csp_theme", "light"));
+setSetting("size", load("csp_size", "m"));
+setSetting("motion", load("csp_motion", "on"));
+applyLang();
+$("chooser").classList.remove("hidden");
+</script>
+</body>
+</html>

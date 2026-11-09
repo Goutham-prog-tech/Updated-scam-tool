@@ -1,0 +1,4 @@
+Third-party components bundled with this project
+- Tesseract.js and tesseract.js-core (Apache-2.0): in-browser image-to-text (OCR) engine, static/ocr/
+- Tesseract trained language data for English, Telugu and Hindi (Apache-2.0): ocr_lang/
+- Source Sans 3, Source Serif 4 and Noto Sans Telugu fonts (SIL Open Font License 1.1), via Fontsource: static/fonts/

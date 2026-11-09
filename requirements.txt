@@ -1,0 +1,5 @@
+flask>=3.0.3
+scikit-learn>=1.4
+pandas
+joblib
+gunicorn>=22.0
